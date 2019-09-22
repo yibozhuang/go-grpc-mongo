@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package blog;
+
+option go_package = "blogpb";
+
+message Blog {
+    string id = 1;
+    string author_id = 2;
+    string title = 3;
+    string content = 4;
+}
+
+message CreateBlogReq {
+    Blog blog = 1;  // here the id provided will be blank
+}
+
+message CreateBlogRes {
+    Blog blog = 1;  // return the blog object back
+}
+
+message ReadBlogReq {
+    string id = 1;  // request will be the id
+}
+
+message ReadBlogRes {
+    Blog blog = 1;  // return blog object back
+}
+
+message UpdateBlogReq {
+    Blog blog = 1;  // updating will require the blog object
+}
+
+message UpdateBlogRes {
+    Blog blog = 1;  // return the blog object back
+}
+
+message DeleteBlogReq {
+    string id = 1;  // delete will provide the blog id
+}
+
+message DeleteBlogRes {
+    bool success = 1;   // return boolean for success
+}
+
+message ListBlogsReq {}
+
+message ListBlogsRes {
+    Blog blog = 1;
+}
+
+service BlogService {
+    rpc CreateBlog(CreateBlogReq) returns (CreateBlogRes);
+    rpc ReadBlog(ReadBlogReq) returns (ReadBlogRes);
+    rpc UpdateBlog(UpdateBlogReq) returns (UpdateBlogRes);
+    rpc DeleteBlog(DeleteBlogReq) returns (DeleteBlogRes);
+    rpc ListBlogs(ListBlogsReq) returns (stream ListBlogsRes);
+}
